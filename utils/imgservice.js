@@ -5,7 +5,9 @@ const randomstring = require('randomstring');
 var fontPath = __dirname + '/fonts/Eczar-Regular.ttf';
 function genImage(data) {
 	const response = [];
-
+	if (!fs.existsSync(path.join(__dirname, './tempImage/'))) {
+		fs.mkdirSync(path.join(__dirname, './tempImage/'));
+    }
 	const folder = randomstring.generate(7);
 	const folderpath = path.join(__dirname, './tempImage/' + folder);
 	if (!fs.existsSync(folderpath)) {
