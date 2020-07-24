@@ -6,10 +6,7 @@ const { GoogleSpreadsheet } = require('google-spreadsheet');
 
 let creds = null;
 if (process.env.NODE_ENV === 'production') {
-	creds = {
-		client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-		private_key: process.env.GOOGLE_PRIVATE_KEY,
-	};
+	creds = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT);
 } else {
 	creds = require('../credentials.json');
 }
