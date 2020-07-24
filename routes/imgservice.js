@@ -21,7 +21,7 @@ async function upAndLink(data) {
 
 router.post('/',ensureAuthenticated, (req, res, next) => {
 	const data = req.body.data;
-	upAndLink(data).then((links) => res.send({ links: links })).catch(err => res.send({error : "Technical error"}));
+	upAndLink(data).then((links) => res.send({ links: links })).catch(err => res.send({error : err.message}));
 });
 
 module.exports = router;
