@@ -1,0 +1,56 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="/dashboard">Rent Manager</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarColor01">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item 
+        <% if(section == "dashboard"){ %>
+          active
+        <% }; %>
+        ">
+          <a class="nav-link" href="/dashboard">Home <% if(section == "dashboard"){ %>
+            <span class="sr-only">(current)</span>
+          <% }; %>
+        </a>
+        </li>
+        <% if(user.access == "super" || user.access == "moderate"){ %>
+        <li class="nav-item
+        <% if(section == "generation"){ %>
+          active
+        <% }; %>
+        ">
+          <a class="nav-link" href="/generation">Bill Generation
+            <% if(section == "generation"){ %>
+              <span class="sr-only">(current)</span>
+            <% }; %>
+          </a>
+        </li>
+       <% } %>
+        <% if(user.access == "super" || user.access == "moderate"){ %>
+        <li class="nav-item <% if(section == "settings"){ %>
+          active
+        <% }; %>">
+          <a class="nav-link" href="/settings">Settings
+            <% if(section == "settings"){ %>
+              <span class="sr-only">(current)</span>
+            <% }; %></a>
+        </li>
+       <% } %>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <div class="dropdown">
+            <span class="dropdown-toggle text-white" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              @<strong><%= user.username %></strong>
+            </span>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="/logout">Log Out</a>
+              <a class="dropdown-item" href="/account/changepassword">Change Password</a>
+            </div>
+          </div>
+          </li>
+        </ul>
+    </div>
+  </nav>

@@ -1,0 +1,26 @@
+<div class="table-responsive">
+    <table class="table table-bordered" id="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Username</th>
+            <th scope="col">Low access</th>
+            <th scope="col">Moderate Access</th>
+            <th scope="col">Super Access</th>
+          </tr>
+        </thead>
+        <tbody>
+            <% users.forEach(function(user){ let {firstname, lastname, username, access} = user; %>
+                <tr>
+                  <td><%= firstname+" "+lastname %></td>
+                  <td><%= username %></td>
+                  <td><%= access == 'low' ? '✔' : '' %></td>
+                  <td><%= access == 'moderate' ? '✔' : '' %></td>
+                  <td><%= access == 'super' ? '✔' : '' %></td>
+                </tr>
+            <% }); %>
+        </tbody>
+      </table>
+</div>
+      
+     

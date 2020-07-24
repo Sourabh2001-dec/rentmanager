@@ -1,0 +1,26 @@
+body{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    min-height: 100vh;
+}
+
+.login-form-container{
+    min-height: 100vh;
+    background: #fdfdfd;
+}
+
+.login-form{
+    min-width: 360px;
+    background: white;
+}
+
+.main-container{
+    min-height: 100vh;
+}
+
+@media screen and (max-width : 400px){
+    .login-form{
+        min-width : 300px
+    }
+}

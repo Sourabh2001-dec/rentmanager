@@ -1,0 +1,19 @@
+<%- include('partials/header') %> 
+<%- include('partials/navbar',{section:section}) %>
+<div class="main-container d-flex flex-column container pt-4">
+	<div class="form-wrapper mt-2 mb-4">
+		<h5 class="mb-4">Select the year to view data</h5>
+		<form class="form-inline ml-md-auto" action="/dashboard" method="GET">
+            <div class="group w-100">
+                <select class="form-control" name="year" id="year">
+                </select>
+            </div>
+		</form>
+	</div>
+	<div class="tabel-container flex-grow-1 d-flex flex-column">
+
+	</div>
+	
+</div>
+<script src="js/dashboard.js"></script>
+<%- include('partials/footer') %>

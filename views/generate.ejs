@@ -1,0 +1,64 @@
+<%- include('partials/header') %> 
+<%- include('partials/navbar',{section:section}) %>
+<div class="container py-4">
+    <%- include('partials/alert') %>
+    <form action="/generation" method="post">
+        <div class="grid">
+            <% for(var i=1;i<7;i++){ %>
+                <% if(i == 1 || i == 4){ %>
+                    <div class="row">
+                <% } %>
+                <div class="col-md-4 p-2">
+                    <div class="cover p-4 border border-secondary rounded">
+                        <h4>Room No. <%= i %></h4>
+                        <div class="form-group">
+                            <label for="r<%= i %>-elec-reading" class="form-control-label">Electricity Reading</label>
+                            <input type="number" name="r<%= i %>-elec-reading" value="<%= typeof data != 'undefined' ? data[`r${i}-elec-reading`] : '' %>" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="r<%= i %>-other" class="form-control-label">Other Cost</label>
+                            <input type="number" name="r<%= i %>-other" class="form-control" value="<%= typeof data != 'undefined' ? data[`r${i}-other`] : '0' %>">
+                        </div>
+
+                        
+                        <div id="accordion-<%= i %>">
+                            <div class="card">
+                              <div class="card-header" id="headingOne-<%= i %>">
+                                <h5 class="mb-0">
+                                  <button type="button" class="btn btn-block" data-toggle="collapse" data-target="#collapseOne-<%= i %>" aria-expanded="true" aria-controls="collapseOne-<%= i %>">
+                                    Change default values
+                                  </button>
+                                </h5>
+                              </div>
+                          
+                              <div id="collapseOne-<%= i %>" class="collapse" aria-labelledby="headingOne-<%= i %>" data-parent="#accordion-<%= i %>">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="r<%= i %>-elec-rate" class="form-control-label">Elec. Rate</label>
+                                        <input type="number" name="r<%= i %>-elec-rate" class="form-control" value="<%= typeof data != 'undefined' ? data[`r${i}-elec-rate`] : '' %><%= typeof defaults != 'undefined' ? defaults[`r${i}-elec-rate`] : '' %>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="r<%= i %>-water-cost" class="form-control-label">Water Cost</label>
+                                        <input type="number" name="r<%= i %>-water-cost" class="form-control" value="<%= typeof data != 'undefined' ? data[`r${i}-water-cost`] : '' %><%= typeof defaults != 'undefined' ? defaults[`r${i}-water-cost`] : '' %>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="r<%= i %>-rent-cost" class="form-control-label">Rent Cost</label>
+                                        <input type="number" name="r<%= i %>-rent-cost" class="form-control" value="<%= typeof data != 'undefined' ? data[`r${i}-rent-cost`] : '' %><%= typeof defaults != 'undefined' ? defaults[`r${i}-rent-cost`] : '' %>">
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% if(i == 3 || i == 6){ %>
+                    </div>
+                <% } %>
+            <% } %>
+        </div>
+        <div class="button-wrapper d-flex algin-items-center justify-content-center py-3">
+            <button class="btn btn-primary btn-lg">Submit</button>
+        </div>
+    </form>
+</div>
+<%- include('partials/footer') %>

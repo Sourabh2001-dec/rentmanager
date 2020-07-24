@@ -1,0 +1,110 @@
+<%- include('partials/header') %> 
+<%- include('partials/navbar',{section:section}) %>
+<div class="container py-3">
+    <% if(user.access == "super" || user.access == "moderate"){ %>
+    <h3>Change default values</h3>
+    <hr>
+    <%if(typeof settings_dval_errors !== 'undefined'){
+        settings_dval_errors.forEach(error => { %>
+        <div class="alert alert-dismissible alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong><%= error.msg %></strong>
+    </div>
+    <% }) }; %>
+    <form class="pb-5" id="default-values" enctype="multipart/form-data">
+      <div class="grid">
+        <% for(var i=1;i<7;i++){ %>
+            <% if(i == 1 || i == 4){ %>
+                <div class="row">
+            <% } %>
+            <div class="col-md-4 p-2">
+                <div class="cover p-4 border border-secondary rounded">
+                    <h4>Room No. <%= i %></h4>
+                    <div class="form-group">
+                        <label for="r<%= i %>-elec-rate" class="form-control-label">Electricity rate</label>
+                        <input type="number" name="r<%= i %>-elec-rate" id="r<%= i %>-elec-rate"  value="<%= typeof defaultvalues != 'undefined' ? defaultvalues[`r${i}-elec-rate`] : '' %>" class="form-control">
+                        <div class="invalid-feedback" id="r<%= i %>-elec-rate-status"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="r<%= i %>-water-cost" class="form-control-label">Water Cost</label>
+                        <input type="number" name="r<%= i %>-water-cost" id="r<%= i %>-water-cost" class="form-control" value="<%= typeof defaultvalues != 'undefined' ? defaultvalues[`r${i}-water-cost`] : '0' %>">
+                        <div class="invalid-feedback" id="r<%= i %>-water-cost-status"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="r<%= i %>-rent-cost" class="form-control-label">Rent Cost</label>
+                        <input type="number" name="r<%= i %>-rent-cost" id="r<%= i %>-rent-cost" class="form-control" value="<%= typeof defaultvalues != 'undefined' ? defaultvalues[`r${i}-rent-cost`] : '0' %>">
+                        <div class="invalid-feedback" id="r<%= i %>-rent-cost-status"></div>
+                    </div>
+                  </div>
+                </div>
+                <% if(i == 3 || i == 6){ %>
+                    </div>
+                <% } %>
+            <% } %>
+        </div>
+        <div class="button-wrapper py-3">
+            <button class="btn btn-primary btn-lg d-flex align-items-center justify-content-center" id="change-values-btn">Update</button>
+        </div>
+    </form>
+    <% } %> >
+    <% if(user.access == "super"){ %>
+    <h3>Add User</h3>
+    <hr>
+    <form autocomplete="off" action="/settings" method="post" class="pb-5">
+        <input autocomplete="off" name="hidden" type="text" style="display:none;">
+
+                <%- include('partials/alert') %>
+                
+        <div class="form-group">
+            <label for="firstname" class="form-control-label">First Name</label>
+            <input type="text" class="form-control" name = "firstname" autocomplete="off" value="<%= typeof username != 'undefined' ? firstname : '' %>">
+        </div>
+        <div class="form-group">
+            <label for="lastname" class="form-control-label">Last Name</label>
+            <input type="text" class="form-control" name = "lastname" autocomplete="off" value="<%= typeof username != 'undefined' ? lastname : '' %>">
+        </div>
+        <div class="form-group">
+            <label for="username" class="form-control-label">Username</label>
+            <input type="text" class="form-control" name = "username" autocomplete="off" value="<%= typeof username != 'undefined' ? username : '' %>">
+        </div>
+        <div class="form-group">
+            <label for="password" class="form-control-label">Password</label>
+            <input type="password" class="form-control" autocomplete="off" name = "password" value="<%= typeof username != 'undefined' ? password : '' %>">
+        </div>
+        <div class="form-group">
+            <label for="password2" class="form-control-label">Confirm Password</label>
+            <input type="password" class="form-control" autocomplete="off" name = "password2" value="<%= typeof username != 'undefined' ? password2 : '' %>">
+        </div>
+        <fieldset class="form-group">
+            <label for="firstname" class="form-control-label">Access Level</label>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="access" id="optionsRadios1" value="low" <% if(typeof access == 'undefined'){ %> checked <% }; if(typeof access !== 'undefined' && access == "low"){ %> checked <% } %>>
+                Low
+              </label>
+            </div>
+            <div class="form-check">
+            <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="access" id="optionsRadios2" value="moderate" <% if(typeof access !== 'undefined' && access == "moderate"){ %> checked <% } %>>
+                Moderate
+              </label>
+            </div>
+            <div class="form-check disabled">
+            <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="access" id="optionsRadios3" value="super" <% if(typeof access !== 'undefined' && access == "super"){ %> checked <% } %> >
+                Super
+              </label>
+            </div>
+          </fieldset>
+        <button class="btn btn-primary">Create User</button>
+    </form>
+
+    <% if (typeof users !== "undefined" ){ %>
+    <h3>Users</h3>
+    <hr>
+    <%- include('partials/table') %>
+    <% }%>
+    <% } %>
+</div>
+<script src="./js/settings.js"></script>
+<%- include('partials/footer') %>
