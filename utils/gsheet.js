@@ -197,7 +197,6 @@ async function changeDefaultValues(newValues) {
 		}
 	}
 	await defValues.save();
-	console.log("changesval",response)
 	return response;
 }
 

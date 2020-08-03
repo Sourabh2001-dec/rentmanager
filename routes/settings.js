@@ -49,7 +49,7 @@ router.get('/', ensureAuthenticated, ensureModerateSuper, (req, res, next) => {
 	}
 });
 
-router.post('/', ensureAuthenticated, ensureSuper, (req, res, next) => {
+router.post('/', ensureAuthenticated, ensureSuper, async (req, res, next) => {
 	const {
 		firstname,
 		lastname,
@@ -79,9 +79,13 @@ router.post('/', ensureAuthenticated, ensureSuper, (req, res, next) => {
 		errors.push({ msg: 'Password does not match to the confirmed password!' });
 	}
 
+	const users = await User.find()
+
 	if (errors.length > 0) {
 		res.render('settings', {
 			section: 'settings',
+			innerSection : 'addUsers',
+			users,
 			errors,
 			firstname,
 			lastname,
@@ -98,7 +102,9 @@ router.post('/', ensureAuthenticated, ensureSuper, (req, res, next) => {
 				});
 				res.render('settings', {
 					section: 'settings',
+					innerSection : 'addUsers',
 					errors,
+					users,
 					firstname,
 					lastname,
 					username,
@@ -128,6 +134,7 @@ router.post('/', ensureAuthenticated, ensureSuper, (req, res, next) => {
 							.then((users) =>
 								res.render('settings', {
 									section: 'settings',
+									innerSection : 'addUsers',
 									users,
 									success: [
 										{
@@ -151,7 +158,6 @@ router.post(
 	(req, res, next) => {
 		let errors = [];
 		let data = req.body.data;
-		console.log(data);
 		for (var key in data) {
 			if (data[key] == '') {
 				errors.push([key, 'Empty values not allowed']);

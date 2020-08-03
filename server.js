@@ -9,16 +9,23 @@ const mongoose = require('mongoose');
 require('./config/passport')(passport);
 
 let db;
-if(process.env.NODE_ENV == "production"){
-	db = process.env.MONGODB
-}
-else{
-	db = require('./credentials.json').mongoDB
+if (process.env.NODE_ENV == 'production') {
+	db = process.env.MONGODB;
+} else {
+	db = require('./credentials.json').mongoDB;
 }
 
 mongoose
-	.connect(db, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify : false })
-	.then(() => console.log('MongoDB connected ...'))
+	.connect(db, {
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+		useFindAndModify: false,
+	})
+	.then(() => {
+		if (process.env.NODE_ENV !== 'production') {
+			console.log('MongoDB connected ...');
+		}
+	})
 	.catch((err) => console.log(err));
 
 const port = process.env.PORT || 3000;
@@ -54,7 +61,7 @@ app.use(function (req, res, next) {
 	res.locals.success_msg = req.flash('success_msg');
 	res.locals.error_msg = req.flash('error_msg');
 	res.locals.error = req.flash('error');
-	res.locals.user = req.user || "";
+	res.locals.user = req.user || '';
 	next();
 });
 
@@ -64,7 +71,7 @@ app.use('/dashboard', require('./routes/dashboard.js'));
 
 app.use('/generation', require('./routes/generate.js'));
 
-app.use('/account',require('./routes/account.js'))
+app.use('/account', require('./routes/account.js'));
 
 app.use('/settings', require('./routes/settings'));
 
@@ -72,13 +79,15 @@ app.use('/yeardata', require('./routes/yeardata.js'));
 
 app.use('/imgservice', require('./routes/imgservice.js'));
 
-app.get('/logout',(req, res, next)=>{
-	req.logOut()
-	req.flash('success_msg',"You are successfully logged out.")
-	res.redirect('/')
-})
+app.get('/logout', (req, res, next) => {
+	req.logOut();
+	req.flash('success_msg', 'You are successfully logged out.');
+	res.redirect('/');
+});
 
 app.listen(port, () => {
-	console.log('Server running on port ' + port);
-	console.log('http://localhost:' + port);
+	if (process.env.NODE_ENV !== 'production') {
+		console.log('Server running on port ' + port);
+		console.log('http://localhost:' + port);
+	}
 });

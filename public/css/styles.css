@@ -19,8 +19,21 @@ body{
     min-height: 100vh;
 }
 
+.tab-pane{
+    padding : 20px 10px
+}
+
+@media screen and (min-width : 400px){
+    .tab-pane{
+        padding : 20px 40px
+    }
+}
 @media screen and (max-width : 400px){
     .login-form{
         min-width : 300px
+    }
+
+    #settingTabs{
+        flex-direction: column;
     }
 }

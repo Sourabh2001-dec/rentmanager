@@ -14,9 +14,9 @@
                 <tr>
                   <td><%= firstname+" "+lastname %></td>
                   <td><%= username %></td>
-                  <td><%= access == 'low' ? '✔' : '' %></td>
-                  <td><%= access == 'moderate' ? '✔' : '' %></td>
-                  <td><%= access == 'super' ? '✔' : '' %></td>
+                  <td><%= access == 'low' ? '✔' : '❌' %></td>
+                  <td><%= access == 'moderate' ? '✔' : '❌' %></td>
+                  <td><%= access == 'super' ? '✔' : '❌' %></td>
                 </tr>
             <% }); %>
         </tbody>

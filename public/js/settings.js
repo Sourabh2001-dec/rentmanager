@@ -1,3 +1,9 @@
+
+$(document).ready(function(){ 
+	$("#settingTabs li:eq(0) a").tab('show');
+});
+
+
 let form = document.getElementById('default-values');
 let state = {
 	lastErrors: [],
