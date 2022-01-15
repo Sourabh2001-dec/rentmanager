@@ -5,28 +5,28 @@ const randomstring = require('randomstring');
 var fontPath = __dirname + '/fonts/Eczar-Regular.ttf';
 function genImage(data) {
 	const response = [];
-	if (!fs.existsSync(path.join(__dirname, './tempImage/'))) {
-		fs.mkdirSync(path.join(__dirname, './tempImage/'));
-    }
-	const folder = randomstring.generate(7);
-	const folderpath = path.join(__dirname, './tempImage/' + folder);
-	if (!fs.existsSync(folderpath)) {
-		fs.mkdirSync(folderpath);
-    }
-    else{
-        while(true){
-            folder = randomstring.generate(7);
-            folderpath = path.join(__dirname, './tempImage/' + folder);
-            if (!fs.existsSync(folderpath)) {
-                fs.mkdirSync(folderpath);
-                return true
-            }
-        }
-    }
+	// if (!fs.existsSync(path.join(__dirname, './tempImage/'))) {
+	// 	fs.mkdirSync(path.join(__dirname, './tempImage/'));
+  //   }
+	// const folder = randomstring.generate(7);
+	// const folderpath = path.join(__dirname, './tempImage/' + folder);
+	// if (!fs.existsSync(folderpath)) {
+	// 	fs.mkdirSync(folderpath);
+  //   }
+  //   else{
+  //       while(true){
+  //           folder = randomstring.generate(7);
+  //           folderpath = path.join(__dirname, './tempImage/' + folder);
+  //           if (!fs.existsSync(folderpath)) {
+  //               fs.mkdirSync(folderpath);
+  //               return true
+  //           }
+  //       }
+  //   }
 
 	data.forEach((tenant) => {
 		const string = `तारीख	        : ${tenant.date}\nखोली क्रमांक	: ${tenant.room_no}\nयुनिट	        : ${tenant.elec_units}\nलाईट बील	        : Rs. ${tenant.elec_bill}\nपाणी बील	        : Rs. ${tenant.water_bill}\nखोलीचे भाडे	: Rs. ${tenant.rent}\nइतर	                : Rs. ${tenant.other}\nटोटल	        : Rs. ${tenant.total}`;
-		const img = text2png(string, {
+		const img = "data:image/png;base64,"+text2png(string, {
 			font: '30px Eczar',
 			debug: true,
 			localFontPath: fontPath,
@@ -38,10 +38,11 @@ function genImage(data) {
 			borderColor: '#444444',
 			borderWidth: 2,
 			output: 'buffer',
-		});
+		}).toString('base64');
 
-		fs.writeFileSync(folderpath + `/${tenant.room_no}.png`, img);
-		response.push(folderpath + `/${tenant.room_no}.png`);
+		// fs.writeFileSync(folderpath + `/${tenant.room_no}.png`, img);
+		// response.push(folderpath + `/${tenant.room_no}.png`);
+		response.push(img);
 	});
 	return response;
 }

@@ -8,7 +8,7 @@ let creds = null;
 if (process.env.NODE_ENV === 'production') {
 	creds = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT);
 } else {
-	creds = require('../credentials.json');
+	creds = require('../credentials.json').GOOGLE_SERVICE_ACCOUNT;
 }
 
 /* -------------------------------------------------------------------------- */

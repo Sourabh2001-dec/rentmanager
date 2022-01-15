@@ -4,6 +4,7 @@ const passport = require('passport');
 const flash = require('connect-flash');
 const session = require('express-session');
 const mongoose = require('mongoose');
+const compression = require("compression")
 
 // Passport config
 require('./config/passport')(passport);
@@ -32,6 +33,8 @@ const port = process.env.PORT || 3000;
 const app = express();
 
 app.set('view engine', 'ejs');
+
+app.use(compression())
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
